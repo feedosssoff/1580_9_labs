@@ -8,7 +8,7 @@ def get_day_period(hours):
   elif hours >= 0 and hours <= 5:
     return "ночи"
 
-def hour_declination():
+def hour_declination(hours):
   if hours % 10 == 1 and hours != 11:
     return str(hours) + "час"
   elif (hours % 10 >= 2 and hours % 10 <= 4) and not (hours >= 12 and hours <= 14):
@@ -16,18 +16,18 @@ def hour_declination():
   else:
     return str(hours) + "часов"
 
-def minute_declination():
+def minute_declination(minutes):
   if minutes % 10 == 1 and minutes != 11:
-    return "минута"
+    return str(minutes) + "минута"
   elif (minutes % 10 >= 2 and minutes % 10 <= 4) and not (minutes >= 10 and minutes < 20):
-    return "минуты"
+    return str(minutes) + "минуты"
   else:
-    return "минут"
+    return str(minutes) + "минут"
 
 def correct_number(number):
   numbers = "0123456789"
   for char in number:
-    if chat not in numbers:
+    if char not in numbers:
       return False
   return True
 
@@ -37,7 +37,7 @@ def get_time_in_words(hours, minutes):
   if hours == 12 and minutes == 0:
     return "полдень"
   
-  period = get_time_period(hours)
+  period = get_day_period(hours)
 
   hours_in_12 = hours
   if hours == 0:
@@ -45,8 +45,8 @@ def get_time_in_words(hours, minutes):
   elif hours > 12:
     hours_in_12 = hours - 12
 
-  hours_in_12_in_words = format_hours(hours_in_12)
-  minutes_in_words = format_minutes(minutes)
+  hours_in_12_in_words = hour_declination(hours_in_12)
+  minutes_in_words = minute_declination(minutes)
 
   result = f"{hours_in_12_in_words} {minutes_in_words} {period}"
   if minutes == 0:
