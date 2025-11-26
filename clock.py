@@ -82,13 +82,13 @@
 """
 
 def get_day_period(hours):
-    if hours >= 6 and hours <= 11:
+    if hours >= 6 and hours < 12:
         return "утра"
-    elif hours >= 12 and hours <= 17:
+    elif hours >= 12 and hours < 18:
         return "дня"
-    elif hours >= 18 and hours <= 23:
+    elif hours >= 18 and hours < 24:
         return "вечера"
-    elif hours >= 0 and hours <= 5:
+    elif hours >= 0 and hours < 6:
         return "ночи"
 
 def hour_declination(hours):
@@ -102,7 +102,7 @@ def hour_declination(hours):
 def minute_declination(minutes):
     if minutes % 10 == 1 and minutes != 11:
         return str(minutes) + " минута"
-    elif (minutes % 10 >= 2 and minutes % 10 <= 4) and not (minutes >= 10 and minutes < 20):
+    elif (minutes % 10 >= 2 and minutes % 10 <= 4) and not (minutes >= 12 and minutes <= 14):
         return str(minutes) + " минуты"
     else:
         return str(minutes) + " минут"
