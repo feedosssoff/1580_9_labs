@@ -118,7 +118,7 @@ def get_time_in_words(hours, minutes):
         return "полночь"
     if hours == 12 and minutes == 0:
         return "полдень"
-    
+
     period = get_day_period(hours)
 
     hours_in_12 = hours
@@ -128,11 +128,12 @@ def get_time_in_words(hours, minutes):
         hours_in_12 = hours - 12
 
     hours_in_12_in_words = hour_declination(hours_in_12)
-    minutes_in_words = minute_declination(minutes)
-
-    result = f"{hours_in_12_in_words} {minutes_in_words} {period}"
+    
     if minutes == 0:
-        result += " ровно"
+        result = f"{hours_in_12_in_words} {period} ровно"
+    else:
+        minutes_in_words = minute_declination(minutes)
+        result = f"{hours_in_12_in_words} {minutes_in_words} {period}"
 
     return result
 
@@ -141,7 +142,7 @@ def main():
     if not data_input:
         print("Ошибка: ничего не было введено.")
         return
-        
+
     data_parts = data_input.split()
     if len(data_parts) != 2:
         print("Ошибка: требуется 2 целых числа через пробел.")
@@ -158,7 +159,7 @@ def main():
     if hours < 0 or hours > 23:
         print("Введены недопустимые данные: часы должны быть от 0 до 23.")
         return
-        
+
     if minutes < 0 or minutes > 59:
         print("Введены недопустимые данные: минуты должны быть от 0 до 59.")
         return
