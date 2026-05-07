@@ -1,48 +1,31 @@
+from functools import total_ordering
+import json
+
+@total_ordering
 class Planet:
-    count = 0
-
-    def __init__(self, name, radius, mass, distance, ptype):
-        Planet.count += 1
+    _count = 0
+    def __init__(self, name, radius, mass, distance, planet_type):
         self.name = name
-        self.__radius = radius
-        self.__mass = mass
+        self.radius = radius
+        self.mass = mass
         self.distance = distance
-        self.ptype = ptype
-        print(f"Создана планета {self.name}")
+        self.planet_type = planet_type
 
-    @property
-    def radius(self):
-        return self.__radius
-
-    @radius.setter
-    def radius(self, value):
-        if value > 0:
-            self.__radius = value
-        else:
-            raise ValueError("Радиус должен быть положительным числом")
-
-    @property
-    def mass(self):
-        return self.__mass
-   
-    @mass.setter
-    def mass(self, value):
-        if value > 0:
-            self.__mass = value
-        else:
-            raise ValueError("Масса должна быть положительным числом")
+        self.__id = Planet._count
+        Planet._count += 1
+        print(f"Создание ID {self.__id}")
 
     def __str__(self):
-        return f"{self.name}:\nРадиус - {self.radius}\nМасса - {self.mass}\nРасстояние от Солнца - {self.distance}\nТип планеты - {self.ptype}"
+        return f"ID {self.__id}, Планета {self.name}:\nРадиус: {self.radius}км\nМасса: {self.mass}кг\nРасстояние от Солнца: {self.distance}млн км\n Тип планеты: {self.planet_type}"
 
     def __repr__(self):
-        return f"Planet('{self.name}', {self.radius}, {self.mass}, {self.distance}, '{self.ptype}')"
+        return f"Planet({self.__id}, {self.name}, {self.radius}, {self.mass}, {self.distance}, '{self.planet_type}')"
 
     def __del__(self):
-        print(f"Удаление {self.name}")
+        print(f"Удаление ID {self.__id}")
 
     def __copy__(self):
-        return Planet(self.name, self.radius, self.mass, self.distance, self.ptype)
+        return Planet(self.name, self.radius, self.mass, self.distance, self.planet_type)
 
     def __lt__(self, other):
         return self.distance < other.distance
@@ -56,5 +39,7 @@ class Planet:
             "radius": self.radius,
             "mass": self.mass,
             "distance": self.distance,
-            "type": self.ptype
+            "planet_type": self.planet_type
         }
+
+    
