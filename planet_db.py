@@ -115,18 +115,6 @@ class PlanetDB:
             return True
         return False
 
-    '''
-    def export_csv(self, csv_file):
-        lines = ["name,radius,mass,distance,type"]
-        for p in self.planets:
-            lines.append(f"{p.name},{p.radius},{p.mass},{p.distance},{p.type}")
-        
-        with open(csv_file, 'w', encoding='utf-8') as file:
-            file.write('\n'.join(lines))
-        return True
-
-    '''
-
     def export_csv(self, csv_file):
         fields = ["name", "radius", "mass", "distance", "type"]
         with open(csv_file, 'w', encoding='utf-8', newline='') as file:
