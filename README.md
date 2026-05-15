@@ -1,6 +1,7 @@
 # Python OOP: Classes & DBs
 
 [followed a habr tutorial for python json](https://habr.com/ru/articles/960256/)
+
 [followed a habr tutorial for python csv](https://habr.com/ru/articles/960804/)
 
 # Files info
