@@ -15,7 +15,7 @@ class CarDB:
 
         self.cars.clear()
         Car.counter = 0
-        with open(self.filename, 'r', encoding='utf-8') as file:
+        with open(self.filename, "r", encoding="utf-8") as file:
             info = json.load(file)
             for c in info:
                 self.cars.append(Car.from_dict(c))
@@ -24,7 +24,7 @@ class CarDB:
         return True
 
     def save(self):
-        with open(self.filename, 'w', encoding='utf-8') as file:
+        with open(self.filename, "w", encoding="utf-8") as file:
             json.dump([c.to_dict() for c in self.cars], file, ensure_ascii=False, indent=4)
 
         print("БД сохранена")
@@ -65,6 +65,27 @@ class CarDB:
 
     def get(self):
         return self.cars
+
+    def search(self, field, value):
+        res = list()
+        strvalue = str(value).lower()
+        for c in self.cars:
+            if field == "brand" and strvalue in c.brand.lower():
+                res.append(c)
+            elif field == "model" and strvalue in c.model.lower():
+                res.append(c)
+            elif field == "year" and strvalue == str(c.year):
+                res.append(c)
+            elif field == "vin" and strvalue in c.vin.lower():
+                res.append(c)
+            elif field == "color" and strvalue in c.color.lower():
+                res.append(c)
+            elif field == "mileage" and strvalue == str(c.mileage):
+                res.append(c)
+            else:
+                print("такого поля не существует")
+                return False
+        return res
     
     def selection_sort(self):
         length = len(self.cars)
@@ -74,8 +95,8 @@ class CarDB:
                 if self.cars[j] < self.cars[min_index]:
                     min_index = j
             
-                if min_index != i:
-                    self.cars[i], self.cars[min_index] = self.cars[min_index], self.cars[i]
+            if min_index != i:
+                self.cars[i], self.cars[min_index] = self.cars[min_index], self.cars[i]
 
     def bubble_sort(self):
         length = len(self.cars)
@@ -120,8 +141,8 @@ class CarDB:
 
     def export_csv(self, csv_file):
         fields = ["brand", "model", "year", "vin", "color", "mileage"]
-        with open(csv_file, 'w', encoding='utf-8', newline='') as file:
-            writeheader == csv.DictWriter(file, fieldnames=fields)
+        with open(csv_file, "w", encoding="utf-8", newline="") as file:
+            writeheader = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
             for c in self.cars:
                 writer.writerow(c.to_dict())

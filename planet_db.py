@@ -15,7 +15,7 @@ class PlanetDB:
 
         self.planets.clear()
         Planet.counter = 0
-        with open(self.filename, 'r', encoding='utf-8') as file:
+        with open(self.filename, "r", encoding="utf-8") as file:
             info = json.load(file)
             for p in info:
                 self.planets.append(Planet.from_dict(p))
@@ -24,7 +24,7 @@ class PlanetDB:
         return True
 
     def save(self):
-        with open(self.filename, 'w', encoding='utf-8') as file:
+        with open(self.filename, "w", encoding="utf-8") as file:
             json.dump([p.to_dict() for p in self.planets], file, ensure_ascii=False, indent=4)
 
         print("БД сохранена")
@@ -35,6 +35,8 @@ class PlanetDB:
             self.planets.append(planet)
             print("планета добавлена")
             return True
+
+        print("объект не экземпляр класса Planet")
         return False
 
     def remove(self, idx):
@@ -61,6 +63,25 @@ class PlanetDB:
     
     def get(self):
         return self.planets
+
+    def search(self, field, value):
+        res = list()
+        strvalue = str(value).lower()
+        for p in self.planets:
+            if field == "name" and strvalue in p.name.lower():
+                res.append(p)
+            elif field == "radius" and str(p.radius) == strvalue:
+                res.append(p)
+            elif field == "mass" and str(p.mass) == strvalue:
+                res.append(p)
+            elif field == "distance" and str(p.distance) == strvalue:
+                res.append(p)
+            elif field == "type" and strvalue in p.type.lower():
+                res.append(p)
+            else:
+                print("такого поля не существует")
+                return False
+        return res
 
     def selection_sort(self):
         length = len(self.planets)
@@ -116,7 +137,7 @@ class PlanetDB:
 
     def export_csv(self, csv_file):
         fields = ["name", "radius", "mass", "distance", "type"]
-        with open(csv_file, 'w', encoding='utf-8', newline='') as file:
+        with open(csv_file, "w", encoding="utf-8", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
             for p in self.planets:

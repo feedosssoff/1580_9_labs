@@ -4,6 +4,7 @@ from functools import total_ordering
 class Car:
     counter = 0
     mode = "brand"
+
     def __init__(self, brand, model, year, vin, color, mileage):
         Car.counter += 1
         self.id = Car.counter
@@ -14,7 +15,6 @@ class Car:
         self.vin = str(vin) if vin != "" else "none"
         self.color = str(color) if color != "" else "none"
         self.mileage = float(mileage) if isinstance(mileage, (float, int)) else 0.0
-
         print(f"Создание ID {self.id}")
 
     def __del__(self):
@@ -24,7 +24,7 @@ class Car:
         return f"Автомобиль {self.brand} {self.model}: {self.year}г.в., VIN: {self.vin}, цвет: {self.color}, пробег: {self.mileage}"
 
     def __repr__(self):
-        return f"Car({self.brand}, {self.model}, {self.year}, {self.vin}, {self.color}, {self.mileage})"
+        return f"Car('{self.brand}', '{self.model}', {self.year}, '{self.vin}', '{self.color}', {self.mileage})"
 
     def __copy__(self):
         return Car(self.brand, self.model, self.year, self.vin, self.color, self.mileage)

@@ -23,7 +23,7 @@ class Planet:
         return f"Планета {self.name}: Радиус - {self.radius} км, Масса - {self.mass} кг, Расстояние от Солнца - {self.distance} млн км, Тип - {self.type}"
 
     def __repr__(self):
-        return f"Planet({self.name}, {self.radius}, {self.mass}, {self.distance}, {self.type})"
+        return f"Planet('{self.name}', {self.radius}, {self.mass}, {self.distance}, '{self.type}')"
 
     def __copy__(self):
         return Planet(self.name, self.radius, self.mass, self.distance, self.type)
