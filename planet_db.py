@@ -20,14 +20,14 @@ class PlanetDB:
             for p in info:
                 self.planets.append(Planet.from_dict(p))
             
-        print("БД загружена")
+        print("база планет загружена")
         return True
 
     def save(self):
         with open(self.filename, "w", encoding="utf-8") as file:
             json.dump([p.to_dict() for p in self.planets], file, ensure_ascii=False, indent=4)
 
-        print("БД сохранена")
+        print("база планет сохранена")
         return True
 
     def add(self, planet):
@@ -80,7 +80,7 @@ class PlanetDB:
                 res.append(p)
             else:
                 print("такого поля не существует")
-                return False
+                return []
         return res
 
     def selection_sort(self):

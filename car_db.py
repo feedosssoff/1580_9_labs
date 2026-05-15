@@ -20,20 +20,20 @@ class CarDB:
             for c in info:
                 self.cars.append(Car.from_dict(c))
 
-        print("БД загружена")
+        print("база машин загружена")
         return True
 
     def save(self):
         with open(self.filename, "w", encoding="utf-8") as file:
             json.dump([c.to_dict() for c in self.cars], file, ensure_ascii=False, indent=4)
 
-        print("БД сохранена")
+        print("база машин сохранена")
         return True
 
     def add(self, car):
         if isinstance(car, Car):
             self.cars.append(car)
-            print("автомобиль добавлен")
+            print("машина добавлена")
             return True
 
         print("объект не экземпляр класса Car")
@@ -84,7 +84,7 @@ class CarDB:
                 res.append(c)
             else:
                 print("такого поля не существует")
-                return False
+                return []
         return res
     
     def selection_sort(self):
