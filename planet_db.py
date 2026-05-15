@@ -17,7 +17,6 @@ class PlanetDB:
         Planet.counter = 0
         with open(self.filename, 'r', encoding='utf-8') as file:
             info = json.load(file)
-            self.planets = list()
             for p in info:
                 self.planets.append(Planet.from_dict(p))
             

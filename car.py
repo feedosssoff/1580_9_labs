@@ -23,6 +23,9 @@ class Car:
     def __str__(self):
         return f"Автомобиль {self.brand} {self.model}: {self.year}г.в., VIN: {self.vin}, цвет: {self.color}, пробег: {self.mileage}"
 
+    def __repr__(self):
+        return f"Car({self.brand}, {self.model}, {self.year}, {self.vin}, {self.color}, {self.mileage})"
+
     def __copy__(self):
         return Car(self.brand, self.model, self.year, self.vin, self.color, self.mileage)
 
