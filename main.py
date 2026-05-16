@@ -38,6 +38,30 @@ def input_float(s):
             return float(info)
         print("ошибка ввода, нужно ввести число")
 
+def edit_str(s, curr):
+    info = input(s).strip()
+    if info == "":
+        return curr
+    return info
+
+def edit_int(s, curr):
+    while True:
+        info = input(s).strip()
+        if info == "":
+            return curr
+        if valid_int(info):
+            return int(info)
+        print("ошибка, введи целое число или оставь строку пустой")
+
+def edit_float(s, curr):
+    while True:
+        info = input(s).strip()
+        if info == "":
+            return curr
+        if valid_float(info):
+            return float(info)
+        print("ошибка, введи число или оставь строку пустой")
+
 def manage_planets(planet_db):
     while True:
         print("\nменю работы с планетами")
@@ -57,8 +81,10 @@ def manage_planets(planet_db):
 
         if choice == "1":
             planet_db.load()
+
         elif choice == "2":
             planet_db.save()
+
         elif choice == "3":
             planets = planet_db.get()
             if len(planets) == 0:
@@ -68,6 +94,7 @@ def manage_planets(planet_db):
                 for idx in range(len(planets)):
                     curr_planet = planets[idx]
                     print(f"индекс {idx} - {curr_planet}")
+
         elif choice == "4":
             name = input("введи название планеты: ").strip()
             radius = input_float("введи радиус планеты: ")
@@ -77,6 +104,7 @@ def manage_planets(planet_db):
 
             new = Planet(name, radius, mass, distance, p_type)
             planet_db.add(new)
+
         elif choice == "5":
             field = input("введи имя поля для поиска (name, radius, mass, distance, type): ").strip()
             value = input("введи значение для поиска: ").strip()
@@ -87,9 +115,96 @@ def manage_planets(planet_db):
                     print(res[idx])
             else:
                 print("по данному запросу ничего не найдено")
-        elif choice == "6":
-            
 
+        elif choice == "6":
+            planets = planet_db.get()
+            if len(planets) == 0:
+                print("база пуста, редактирование невозможно")
+                continue
+            print("доступные записи:")
+            for idx in range(len(planets)):
+                print(f"индекс {idx}: {planets[idx].name}")
+
+            edit_idx = input_int("введи индекс для редактирования: ")
+
+            if edit_idx >= 0 and edit_idx < len(planets):
+                old = planets[edit_idx]
+                print("если менять поле не нужно просто нажми enter")
+
+                new_name = edit_str(f"новое имя [{old.name}]: ", old.name)
+                new_radius = edit_float(f"новый радиус [{old.radius}]: ", old.radius)
+                new_mass = edit_float(f"новая масса [{old.mass}]: ", old.mass)
+                new_distance = edit_float(f"новая дистанция [{old.distance}]: ", old.distance)
+                new_type = edit_str(f"новый тип [{old.type}]: ", old.type)
+
+                planet_db.edit(edit_idx, new_name, new_radius, new_mass, new_distance, new_type)
+                print("изменения сохранены")
+            else:
+                print("ошибка: неверный индекс")
+
+        elif choice == "7":
+            planets = planet_db.get()
+            if len(planets) == 0:
+                print("база пуста, удалять нечего")
+                continue
+            print("доступные записи:")
+            for idx in range(len(planets)):
+                print(f"индекс {idx}: {planets[idx].name}")
+            
+            delete_idx = input_int("введи индекс для удаления: ")
+
+            if delete_idx >= 0 and delete_idx < len(planets):
+                confirm = input("вы уверены, что хотите удалить эту запись? (да/нет): ").strip()
+                if confirm == "да":
+                    if planet_db.remove(delete_idx):
+                        print("запись успешно удалена")
+                    else:
+                        print("ошибка при удалении записи")
+                else:
+                    print("удаление отменено")
+            else:
+                print("ошибка: неверный индекс")
+
+        elif choice == "8":
+            field = input("введи поле для сортировки (name, radius, mass, distance, type): ").strip()
+            algo = input("введи алгоритм (selection, bubble, insertion): ").strip()
+            if planet_db.sort(field, algo):
+                print("база данных успешно отсортирована")
+            else:
+                print("ошибка: неверное поле или неизвестный алгоритм")
+
+        elif choice == "9":
+            planets = planet_db.get()
+            if len(planets) == 0:
+                print("база пуста, копирование невозможно")
+                continue
+            print("доступные записи:")
+            for idx in range(len(planets)):
+                print(f"индекс {idx}: {planets[idx].name}")
+
+            copy_idx = input_int("введи индекс для копирования: ")
+
+            if copy_idx >= 0 and copy_idx < len(planets):
+                confirm = input("создать копию этого объекта? (да/нет): ").strip()
+                if confirm == "да":
+                    copied = planets[copy_idx].__copy__()
+                    planet_db.add(copied)
+                    print("дубликат объекта добавлен")
+                else:
+                    print("копирование отменено")
+            else:
+                print("ошибка: неверный индекс")
+        
+        elif choice == "10":
+            filename = input("введи имя csv файла: ").strip()
+            planet_db.export_csv(filename)
+            print("данные успешно экспортированы")
+        
+        elif choice == "0":
+            break
+        
+        else:
+            print("ошибка: выбран неверный пункт меню")
 
 
 
