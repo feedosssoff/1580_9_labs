@@ -109,6 +109,9 @@ def manage_planets(planet_db):
             field = input("введи имя поля для поиска (name, radius, mass, distance, type): ").strip()
             value = input("введи значение для поиска: ").strip()
             res = planet_db.search(field, value)
+
+            if res is None:
+                continue
             if len(res) > 0:
                 print("найденные совпадения:")
                 for idx in range(len(res)):
@@ -254,6 +257,9 @@ def manage_cars(car_db):
             field = input("введи имя поля для поиска (brand, model, year, vin, color, mileage): ").strip()
             value = input("введи значение для поиска: ").strip()
             res = car_db.search(field, value)
+
+            if res is None:
+                continue
             if len(res) > 0:
                 print("найденные совпадения:")
                 for idx in range(len(res)):
@@ -276,12 +282,12 @@ def manage_cars(car_db):
                 old = cars[edit_idx]
                 print("если менять поле не нужно, просто нажми enter")
                 
-                new_brand = input_edit_str(f"новая марка [{old.brand}]: ", old.brand)
-                new_model = input_edit_str(f"новая модель [{old.model}]: ", old.model)
-                new_year = input_edit_int(f"новый год [{old.year}]: ", old.year)
-                new_vin = input_edit_str(f"новый vin [{old.vin}]: ", old.vin)
-                new_color = input_edit_str(f"новый цвет [{old.color}]: ", old.color)
-                new_mileage = input_edit_float(f"новый пробег [{old.mileage}]: ", old.mileage)
+                new_brand = edit_str(f"новая марка [{old.brand}]: ", old.brand)
+                new_model = edit_str(f"новая модель [{old.model}]: ", old.model)
+                new_year = edit_int(f"новый год [{old.year}]: ", old.year)
+                new_vin = edit_str(f"новый vin [{old.vin}]: ", old.vin)
+                new_color = edit_str(f"новый цвет [{old.color}]: ", old.color)
+                new_mileage = edit_float(f"новый пробег [{old.mileage}]: ", old.mileage)
                 
                 car_db.edit(edit_idx, new_brand, new_model, new_year, new_vin, new_color, new_mileage)
                 print("изменения сохранены")
@@ -299,7 +305,7 @@ def manage_cars(car_db):
 
             delete_idx = input_int("введи индекс для удаления: ")
             
-            if delete_idx >= 0 and delete_idx < len(cars)
+            if delete_idx >= 0 and delete_idx < len(cars):
                 confirm = input("вы уверены, что хотите удалить эту запись? (да/нет): ").strip()
                 if confirm == "да":
                     if car_db.remove(delete_idx):
@@ -319,7 +325,7 @@ def manage_cars(car_db):
             else:
                 print("ошибка: неверное поле или неизвестный алгоритм")
 
-        elif choice === "9":
+        elif choice == "9":
             cars = car_db.get()
             if len(cars) == 0:
                 print("база пуста, копирование невозможно")

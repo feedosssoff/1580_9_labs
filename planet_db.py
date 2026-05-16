@@ -67,20 +67,23 @@ class PlanetDB:
     def search(self, field, value):
         res = list()
         strvalue = str(value).lower()
+
+        fields = ["name", "radius", "mass", "distance", "type"]
+        if field not in fields:
+            print("такого поля не существует")
+            return None
+
         for p in self.planets:
             if field == "name" and strvalue in p.name.lower():
                 res.append(p)
-            elif field == "radius" and str(p.radius) == strvalue:
+            elif field == "radius" and strvalue in str(p.radius):
                 res.append(p)
-            elif field == "mass" and str(p.mass) == strvalue:
+            elif field == "mass" and strvalue in str(p.mass):
                 res.append(p)
-            elif field == "distance" and str(p.distance) == strvalue:
+            elif field == "distance" and strvalue in str(p.distance):
                 res.append(p)
             elif field == "type" and strvalue in p.type.lower():
                 res.append(p)
-            else:
-                print("такого поля не существует")
-                return []
         return res
 
     def selection_sort(self):

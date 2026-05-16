@@ -11,7 +11,12 @@ class Car:
 
         self.brand = str(brand) if brand != "" else "none"
         self.model = str(model) if model != "" else "none"
-        self.year = int(year) if isinstance(year, (float, int)) else 1886
+
+        if isinstance(year, (float, int)) and int(year) >= 1886 and int(year) <= 2026:
+            self.year = int(year)
+        else:
+            self.year = 1886
+
         self.vin = str(vin) if vin != "" else "none"
         self.color = str(color) if color != "" else "none"
         self.mileage = float(mileage) if isinstance(mileage, (float, int)) else 0.0

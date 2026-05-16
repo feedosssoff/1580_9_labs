@@ -69,22 +69,25 @@ class CarDB:
     def search(self, field, value):
         res = list()
         strvalue = str(value).lower()
+
+        fields = ["brand", "model", "year", "vin", "color", "mileage"]
+        if field not in fields:
+            print("такого поля не существует")
+            return None
+
         for c in self.cars:
             if field == "brand" and strvalue in c.brand.lower():
                 res.append(c)
             elif field == "model" and strvalue in c.model.lower():
                 res.append(c)
-            elif field == "year" and strvalue == str(c.year):
+            elif field == "year" and strvalue in str(c.year):
                 res.append(c)
             elif field == "vin" and strvalue in c.vin.lower():
                 res.append(c)
             elif field == "color" and strvalue in c.color.lower():
                 res.append(c)
-            elif field == "mileage" and strvalue == str(c.mileage):
+            elif field == "mileage" and strvalue in str(c.mileage):
                 res.append(c)
-            else:
-                print("такого поля не существует")
-                return []
         return res
     
     def selection_sort(self):
@@ -141,7 +144,7 @@ class CarDB:
     def export_csv(self, csv_file):
         fields = ["brand", "model", "year", "vin", "color", "mileage"]
         with open(csv_file, "w", encoding="utf-8", newline="") as file:
-            writeheader = csv.DictWriter(file, fieldnames=fields)
+            writer = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
             for c in self.cars:
                 writer.writerow(c.to_dict())
