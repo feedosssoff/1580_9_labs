@@ -134,7 +134,6 @@ class CarDB:
             elif algo == "insertion":
                 self.insertion_sort()
             else:
-                print("алгоритм сортировки введен неверно")
                 return False
             return True
         return False
